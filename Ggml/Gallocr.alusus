@@ -1,0 +1,12 @@
+@merge module Ggml {
+    class Gallocr {
+        @expname[ggml_gallocr_new]
+        func new(backendBufferType: ref[BackendBufferType]): ref[Gallocr];
+        
+        @expname[ggml_gallocr_free]
+        func free(ref[Gallocr]);
+        
+        @expname[ggml_gallocr_alloc_graph]
+        handler this.allocGraph(graph: ref[CGraph]): Bool;
+    }
+}

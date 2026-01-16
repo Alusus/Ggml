@@ -1,0 +1,9 @@
+@merge module Ggml {
+    class BackendBuffer {
+        @expname[ggml_backend_buffer_free]
+        func free(ref[BackendBuffer]);
+    }
+    
+    class BackendBufferType {
+    }
+}

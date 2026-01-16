@@ -1,0 +1,12 @@
+@merge module Ggml {
+    class CPlan {
+        def workSize: ArchWord;
+        def workData: ref[array[Word[8]]];
+        
+        def nThreads: Int;
+        def threadPool: ref[ThreadPool];
+        
+        def abortCallback: ptr[function(ptr)];
+        def abortCallbackData: ptr;
+    }
+}

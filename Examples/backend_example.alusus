@@ -1,0 +1,118 @@
+import "Srl/Array";
+import "Srl/Memory";
+import "Apm";
+Apm.importFile("Alusus/Ggml");
+use Srl;
+use Ggml;
+
+func main() {
+    // Initialize data of matrices to perform matrix multiplication
+    def rowsA: Int = 4;
+    def colsA: Int = 2;
+    def matrixA: Array[Float]({
+        2.0, 8.0,
+        5.0, 1.0,
+        4.0, 2.0,
+        8.0, 6.0
+    });
+
+    def rowsB: Int = 3;
+    def colsB: Int = 2;
+    def matrixB: Array[Float]({
+        10.0, 5.0,
+        9.0, 9.0,
+        5.0, 4.0
+    });
+
+    // 1. Initialize backend
+    // For now, we use CPU backend (CUDA support can be added later)
+    def backend: ref[Backend](Backend.vkInit(0));
+
+    // Calculate the size needed to allocate
+    def ctxSize: ArchWord = 0;
+    ctxSize += 2 * getTensorOverhead(); // 2 tensors
+    // no need to allocate anything else!
+
+    // 2. Allocate `ggml_context` to store tensor metadata
+    def ctx: ref[Context](init(InitParams().{
+        memSize = ctxSize;
+        memBuffer = 0;
+        noAlloc = true; // the tensors will be allocated later by backendAllocTensors()
+    }));
+
+    // 3. Create tensors metadata (only their shapes and data types)
+    def tensorA: ref[Tensor](ctx.newTensor(Type.F32, colsA, rowsA));
+    def tensorB: ref[Tensor](ctx.newTensor(Type.F32, colsB, rowsB));
+
+    // 4. Allocate a `ggml_backend_buffer` to store all tensors
+    def buffer: ref[BackendBuffer](ctx.backendAllocTensors(backend));
+
+    // 5. Copy tensor data from main memory (RAM) to backend buffer
+    tensorA.backendSet(matrixA.buf~ptr, 0, tensorA.nBytes);
+    tensorB.backendSet(matrixB.buf~ptr, 0, tensorB.nBytes);
+
+    // 6. Create a `ggml_cgraph` for mul_mat operation
+
+    // Create a temporary context to build the graph
+    // GGML_DEFAULT_GRAPH_SIZE is typically 2048
+    def graphSize: ArchWord = getTensorOverhead() * 2048 + getGraphOverhead();
+    def ctxCgraph: ref[Context](init(InitParams().{
+        memSize = graphSize;
+        memBuffer = 0;
+        noAlloc = true; // the tensors will be allocated later by gallocr
+    }));
+    def gf: ref[CGraph](ctxCgraph.newGraph());
+
+    // result = a*b^T
+    // Note: mulMat(A, B) ==> B will be transposed internally
+    // The result is transposed
+    def result: ref[Tensor](ctxCgraph.mulMat(tensorA, tensorB));
+
+    // Add "result" tensor and all of its dependencies to the cgraph
+    buildForwardExpand(gf, result);
+
+    // 7. Create a `ggml_gallocr` for cgraph computation
+    def allocr: ref[Gallocr](Gallocr.new(backend.getDefaultBufferType()));
+    allocr.allocGraph(gf);
+
+    // 8. Run the computation
+    def nThreads: Int = 1; // Number of threads for multi-threading operations
+    if backend.isCpu {
+        backend.cpuSetNThreads(nThreads);
+    }
+    backend.graphCompute(gf);
+
+    // 9. Retrieve results (output tensors)
+    // Allocate memory for result data
+    def resultData: Array[Float];
+    resultData.reserve(rowsB * rowsA);
+    // Because the tensor data is stored in device buffer, we need to copy it back to RAM
+    result.backendGet(resultData.buf~ptr, 0, result.nBytes);
+
+    // Print the result
+    Console.print("Matrix multiplication result (transposed):\n[\n");
+
+    // Note: The result dimensions are rowsB x rowsA (transposed)
+    def resultRows: Int = rowsB;
+    def resultCols: Int = rowsA;
+
+    def i: Int;
+    def j: Int;
+    for j = 0, j < resultRows, ++j {
+        Console.print("  ");
+        for i = 0, i < resultCols, ++i {
+            Console.print("%.2f ", resultData.buf(j * resultCols + i)~cast[Float[64]]);
+        }
+        Console.print("\n");
+    }
+    Console.print("]\n");
+
+    // 10. Free memory and exit
+    free(ctxCgraph);
+    Gallocr.free(allocr);
+    free(ctx);
+    BackendBuffer.free(buffer);
+    Backend.free(backend);
+}
+
+main();

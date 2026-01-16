@@ -1,0 +1,152 @@
+@merge module Ggml {
+    class Context {
+        @expname[ggml_new_tensor]
+        handler this.newTensor(type: Int, nDims: Int, ne: ref[array[Int[64]]]): ref[Tensor];
+
+        @expname[ggml_new_tensor_1d]
+        handler this.newTensor(type: Int, ne0: Int[64]): ref[Tensor];
+
+        @expname[ggml_new_tensor_2d]
+        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64]): ref[Tensor];
+
+        @expname[ggml_new_tensor_3d]
+        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64]): ref[Tensor];
+
+        @expname[ggml_new_tensor_4d]
+        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64]): ref[Tensor];
+
+        @expname[ggml_dup_tensor]
+        handler this.dup(a: ref[Tensor]): ref[Tensor];
+        
+        @expname[ggml_new_graph]
+        handler this.newGraph(): ref[CGraph];
+
+        @expname[ggml_new_graph_custom]
+        handler this.newGraph(size: ArchWord, grads: Bool): ref[CGraph];
+
+        @expname[ggml_graph_dup]
+        handler this.dup(a: ref[CGraph], forceGrads: Bool): ref[CGraph];
+
+        @expname[ggml_backend_alloc_ctx_tensors]
+        handler this.backendAllocTensors(backend: ref[Backend]): ref[BackendBuffer];
+
+        @expname[ggml_add]
+        handler this.add(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_mul]
+        handler this.mul(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_sub]
+        handler this.sub(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_div]
+        handler this.div(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_log]
+        handler this.log(t: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_sum]
+        handler this.sum(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_mean]
+        handler this.mean(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_argmax]
+        handler this.argmax(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_norm]
+        handler this.norm(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_rms_norm]
+        handler this.rmsNorm(a: ref[Tensor], eps: Float): ref[Tensor];
+
+        @expname[ggml_mul_mat]
+        handler this.mulMat(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_scale]
+        handler this.scale(a: ref[Tensor], alpha: Float): ref[Tensor];
+
+        @expname[ggml_set]
+        handler this.set(a: ref[Tensor], value: Float): ref[Tensor];
+
+        @expname[ggml_cpy]
+        handler this.cpy(src: ref[Tensor], dst: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_cont]
+        handler this.cont(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_reshape]
+        handler this.reshape(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_reshape_1d]
+        handler this.reshape(a: ref[Tensor], ne0: Int[64]): ref[Tensor];
+
+        @expname[ggml_reshape_2d]
+        handler this.reshape(a: ref[Tensor], ne0: Int[64], ne1: Int[64]): ref[Tensor];
+
+        @expname[ggml_reshape_3d]
+        handler this.reshape(a: ref[Tensor], ne0: Int[64], ne1: Int[64], ne2: Int[64]): ref[Tensor];
+
+        @expname[ggml_reshape_4d]
+        handler this.reshape(a: ref[Tensor], ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64]): ref[Tensor];
+
+        @expname[ggml_view_1d]
+        handler this.view(a: ref[Tensor], ne0: Int[64], offset: ArchWord): ref[Tensor];
+
+        @expname[ggml_view_2d]
+        handler this.view(a: ref[Tensor], ne0: Int[64], ne1: Int[64], nb1: ArchWord, offset: ArchWord): ref[Tensor];
+
+        @expname[ggml_view_3d]
+        handler this.view(
+            a: ref[Tensor], ne0: Int[64], ne1: Int[64], ne2: Int[64], nb1: ArchWord, nb2: ArchWord, offset: ArchWord
+        ): ref[Tensor];
+
+        @expname[ggml_view_4d]
+        handler this.view(
+            a: ref[Tensor], ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64],
+            nb1: ArchWord, nb2: ArchWord, nb3: ArchWord, offset: ArchWord
+        ): ref[Tensor];
+
+        @expname[ggml_permute]
+        handler this.permute(a: ref[Tensor], axis1: Int, axis2: Int, axis3: Int, axis4: Int): ref[Tensor];
+
+        @expname[ggml_transpose]
+        handler this.transpose(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_get_rows]
+        handler this.getRows(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_set_rows]
+        handler this.setRows(a: ref[Tensor], b: ref[Tensor], c: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_diag]
+        handler this.diag(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_diag_mask_inf]
+        handler this.diagMaskInf(a: ref[Tensor], nPast: Int): ref[Tensor];
+
+        @expname[ggml_diag_mask_inf_inplace]
+        handler this.diagMaskInfInplace(a: ref[Tensor], nPast: Int): ref[Tensor];
+
+        @expname[ggml_diag_mask_zero]
+        handler this.diagMaskZero(a: ref[Tensor], nPast: Int): ref[Tensor];
+
+        @expname[ggml_diag_mask_zero_inplace]
+        handler this.diagMaskZeroInplace(a: ref[Tensor], nPast: Int): ref[Tensor];
+
+        @expname[ggml_soft_max]
+        handler this.softMax(a: ref[Tensor]): ref[Tensor];
+
+        @expname[ggml_rope]
+        handler this.rope(a: ref[Tensor], b: ref[Tensor], nDims: Int, mode: Int): ref[Tensor];
+
+        @expname[ggml_pad]
+        handler this.pad(t: ref[Tensor], p0: Int, p1: Int, p2: Int, p3: Int): ref[Tensor];
+
+        @expname[ggml_roll]
+        handler this.roll(t: ref[Tensor], shift0: Int, shift1: Int, shift2: Int, shift3: Int): ref[Tensor];
+
+        @expname[ggml_graph_compute_with_ctx]
+        handler this.graphCompute(graph: ref[CGraph], nThreads: Int): Int;
+    }
+}

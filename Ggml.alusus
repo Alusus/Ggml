@@ -1,0 +1,152 @@
+import "Srl/Array.alusus";
+import "Srl/String.alusus";
+
+import "Bin/libggml-base.so.0.9.5";
+import "Bin/libggml-cpu-x64.so";
+def useVulkan: CharsPtr = Srl.System.getEnv("GGML_USE_VULKAN");
+if useVulkan != 0 and Srl.String.isEqual(useVulkan, "1") {
+    Core.importFile("Bin/libggml-vulkan.so");
+}
+
+import "Ggml/ThreadPool";
+import "Ggml/Tensor";
+import "Ggml/CPlan";
+import "Ggml/CGraph";
+import "Ggml/Context";
+import "Ggml/Backend";
+import "Ggml/BackendBuffer";
+import "Ggml/Gallocr";
+
+@merge module Ggml {
+    def Status: {
+        def ALLOC_FAILED: -2i32;
+        def FAILED: -1i32;
+        def SUCCESS: 0i32;
+        def ABORTED: 1i32;
+    }
+
+    def Type: {
+        def F32: 0i32;
+        def F16: 1i32;
+        def Q4_0: 2i32;
+        def Q4_1: 3i32;
+        def Q5_0: 6i32;
+        def Q5_1: 7i32;
+        def Q8_0: 8i32;
+        def Q8_1: 9i32;
+        def Q2_K: 10i32;
+        def Q3_K: 11i32;
+        def Q4_K: 12i32;
+        def Q5_K: 13i32;
+        def Q6_K: 14i32;
+        def IQ2_XXS: 16i32;
+        def IQ2_XS: 17i32;
+        def IQ3_XXS: 18i32;
+        def IQ1_S: 19i32;
+        def IQ4_NL: 20i32;
+        def IQ3_S: 21i32;
+        def IQ2_S: 22i32;
+        def IQ4_XS: 23i32;
+        def I8: 24i32;
+        def I16: 25i32;
+        def I32: 26i32;
+        def I64: 27i32;
+        def F64: 28i32;
+        def IQ1_M: 29i32;
+        def BF16: 30i32;
+    }
+
+    def FType: {
+        def UNKNOWN: -1i32;
+        def ALL_F32: 0i32;
+        def MOSTLY_F16: 1i32;
+        def MOSTLY_Q4_0: 2i32;
+        def MOSTLY_Q4_1: 3i32;
+        def MOSTLY_Q4_1_SOME_F16: 4i32;
+        def MOSTLY_Q8_0: 7i32;
+        def MOSTLY_Q5_0: 8i32;
+        def MOSTLY_Q5_1: 9i32;
+        def MOSTLY_Q2_K: 10i32;
+        def MOSTLY_Q3_K: 11i32;
+        def MOSTLY_Q4_K: 12i32;
+        def MOSTLY_Q5_K: 13i32;
+        def MOSTLY_Q6_K: 14i32;
+        def MOSTLY_IQ2_XXS: 15i32;
+        def MOSTLY_IQ2_XS: 16i32;
+        def MOSTLY_IQ3_XXS: 17i32;
+        def MOSTLY_IQ1_S: 18i32;
+        def MOSTLY_IQ4_NL: 19i32;
+        def MOSTLY_IQ3_S: 20i32;
+        def MOSTLY_IQ2_S: 21i32;
+        def MOSTLY_IQ4_XS: 22i32;
+        def MOSTLY_IQ1_M: 23i32;
+        def MOSTLY_BF16: 24i32;
+        def MOSTLY_MXFP4: 25i32;
+    }
+
+    class InitParams {
+        def memSize: ArchWord;
+        def memBuffer: ptr;
+        def noAlloc: Bool;
+    }
+
+    @expname[ggml_init]
+    func init(params: InitParams): ref[Context];
+
+    @expname[ggml_free]
+    func free(ctx: ref[Context]);
+
+    @expname[ggml_tensor_overhead]
+    func getTensorOverhead(): ArchWord;
+
+    @expname[ggml_type_size]
+    func getTypeSize(type: Int): ArchWord;
+
+    @expname[ggml_row_size]
+    func getRowSize(type: Int, ne: Int[64]): ArchWord;
+
+    @expname[ggml_graph_overhead]
+    func getGraphOverhead(): ArchWord;
+
+    @expname[ggml_set_abort_callback]
+    func setAbortCallback(cb: ptr[func (CharsPtr)]): ptr[func (CharsPtr)];
+
+    @expname[ggml_abort]
+    func abort(file: CharsPtr, line: Int, fmt: CharsPtr, ...any);
+
+    @expname[ggml_ftype_to_ggml_type]
+    func fTypeToType(ftype: Int): Int;
+
+    @expname[ggml_status_to_string]
+    func statusToString(status: Int): CharsPtr;
+
+    @expname[ggml_fp16_to_fp32]
+    func fp16ToFp32(v: Word[16]): Float;
+
+    @expname[ggml_fp16_to_fp32_row]
+    func fp16ToFp32(src: ref[array[Word[16]]], dst: ref[array[Float]], len: Int[64]);
+
+    @expname[ggml_fp32_to_fp16]
+    func fp32ToFp16(v: Float): Word[16];
+
+    @expname[ggml_fp32_to_fp16_row]
+    func fp32ToFp16(src: ref[array[Float]], dst: ref[array[Word[16]]], len: Int[64]);
+
+    @expname[ggml_fp32_to_bf16]
+    func fp32ToBf16(v: Float): Word[16];
+
+    @expname[ggml_fp32_to_bf16_row]
+    func fp32ToBf16(src: ref[array[Float]], dst: ref[array[Word[16]]], len: Int[64]);
+
+    @expname[ggml_bf16_to_fp32]
+    func bf16ToFp32(v: Word[16]): Float;
+
+    @expname[ggml_bf16_to_fp32_row]
+    func bf16ToFp32(src: ref[array[Word[16]]], dst: ref[array[Float]], len: Int[64]);
+
+    @expname[ggml_build_forward_expand]
+    func buildForwardExpand(graph: ref[CGraph], tensor: ref[Tensor]);
+
+    @expname[ggml_build_backward_expand]
+    func buildBackwardExpand(context: ref[Context], graph: ref[CGraph], tensor: ref[ref[Tensor]]);
+}

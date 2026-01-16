@@ -1,0 +1,44 @@
+@merge module Ggml {
+    class ThreadPool {
+        def SchedPriority: {
+            def LOW: -1;
+            def NORMAL: 0;
+            def MEDIUM: 1;
+            def HIGH: 2;
+            def REALTIME: 3;
+        };
+
+        class Params {
+            def cpuMask: array[Bool, 512];  // mask of cpu cores (all-zeros means use default affinity settings)
+            def nThreads: Int;              // number of threads
+            def prio: Int;                  // thread priority
+            def poll: Word;                 // polling level (0 - no polling, 100 - aggressive polling)
+            def strictCpu: Bool;            // strict cpu placement
+            def paused: Bool;               // start in paused state
+            
+            @expname[ggml_threadpool_params_init]
+            handler this.init(nThreads: Int);
+            
+            @expname[ggml_threadpool_params_default]
+            func getDefault(): Params;
+            
+            @expname[ggml_threadpool_params_match]
+            func match (a: ref[Params], b: ref[Params]): Bool;
+        };
+
+        @expname[ggml_threadpool_new]
+        func new(params: ref[Params]): ref[ThreadPool];
+
+        @expname[ggml_threadpool_free]
+        func free(pool: ref[ThreadPool]);
+
+        @expname[ggml_threadpool_get_n_threads]
+        handler this.nThreads: Int;
+
+        @expname[ggml_threadpool_pause]
+        handler this.pause();
+
+        @expname[ggml_threadpool_resume]
+        handler this.resume();
+    }
+}

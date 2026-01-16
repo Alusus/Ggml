@@ -1,0 +1,30 @@
+@merge module Ggml {
+    class Backend {
+        @expname[ggml_backend_cpu_init]
+        func cpuInit(): ref[Backend];
+
+        @expname[ggml_backend_vk_init]
+        func vkInit(devNum: ArchWord): ref[Backend];
+
+        @expname[ggml_backend_free]
+        func free(ref[Backend]);
+
+        @expname[ggml_backend_get_default_buffer_type]
+        handler this.getDefaultBufferType(): ref[BackendBufferType];
+        
+        @expname[ggml_backend_is_cpu]
+        handler this.isCpu: Bool;
+
+        @expname[ggml_backend_is_vk]
+        handler this.isVk: Bool;
+        
+        @expname[ggml_backend_cpu_set_n_threads]
+        handler this.cpuSetNThreads(threads: Int);
+        
+        @expname[ggml_backend_graph_compute]
+        handler this.graphCompute(graph: ref[CGraph]): Int;
+        
+        @expname[ggml_backend_graph_compute_async]
+        handler this.graphComputeAsync(graph: ref[CGraph]): Int;
+    }
+}

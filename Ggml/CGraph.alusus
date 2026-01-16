@@ -1,0 +1,15 @@
+@merge module Ggml {
+    class CGraph {
+        @expname[ggml_graph_plan]
+        handler this.plan(nThreads: Int, threadPool: ref[ThreadPool]): CPlan;
+
+        @expname[ggml_graph_compute]
+        handler this.compute(cplan: ref[CPlan]): Int;
+
+        @expname[ggml_graph_reset]
+        handler this.reset();
+        
+        @expname[ggml_graph_print]
+        handler this.print();
+    }
+}

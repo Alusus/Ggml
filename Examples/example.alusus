@@ -1,0 +1,95 @@
+import "Srl/Array";
+import "Srl/Memory";
+import "Apm";
+Apm.importFile("Alusus/Ggml");
+import "Srl/Memory";
+use Srl;
+use Ggml;
+
+func main() {
+    // Initialize data of matrices to perform matrix multiplication
+    def rowsA: Int = 4;
+    def colsA: Int = 2;
+    def matrixA: Array[Float]({
+        2.0, 8.0,
+        5.0, 1.0,
+        4.0, 2.0,
+        8.0, 6.0
+    });
+
+    def rowsB: Int = 3;
+    def colsB: Int = 2;
+    def matrixB: Array[Float]({
+        10.0, 5.0,
+        9.0, 9.0,
+        5.0, 4.0
+    });
+
+    // 1. Allocate `ggml_context` to store tensor data
+    // Calculate the size needed to allocate
+    def ctxSize: ArchWord = 0;
+    ctxSize += rowsA * colsA * getTypeSize(Type.F32); // tensor a (F32 = 4 bytes)
+    ctxSize += rowsB * colsB * getTypeSize(Type.F32); // tensor b (F32 = 4 bytes)
+    ctxSize += rowsA * rowsB * getTypeSize(Type.F32); // result (F32 = 4 bytes)
+    ctxSize += 3 * getTensorOverhead(); // metadata for 3 tensors (approximate overhead)
+    ctxSize += getGraphOverhead(); // graph overhead
+    ctxSize += 1024; // some additional overhead
+
+    // Allocate `ggml_context` to store tensor data
+    def ctx: ref[Context](init(InitParams().{
+        memSize = ctxSize;
+        memBuffer = 0;
+        noAlloc = false;
+    }));
+
+    // 2. Create tensors and set data
+    def tensorA: ref[Tensor](ctx.newTensor(Type.F32, colsA, rowsA));
+    def tensorB: ref[Tensor](ctx.newTensor(Type.F32, colsB, rowsB));
+
+    // Copy matrix data into tensors
+    Srl.Memory.copy(tensorA.data, matrixA.buf~ptr, tensorA.nBytes);
+    Srl.Memory.copy(tensorB.data, matrixB.buf~ptr, tensorB.nBytes);
+
+    // 3. Create a `ggml_cgraph` for mul_mat operation
+    def graph: ref[CGraph](ctx.newGraph());
+
+    // result = a*b^T
+    // Note: ggml_mul_mat(A, B) ==> B will be transposed internally
+    // The result is transposed
+    def result: ref[Tensor](ctx.mulMat(tensorA, tensorB));
+
+    // Mark the "result" tensor to be computed
+    buildForwardExpand(graph, result);
+
+    graph.print();
+
+    // 4. Run the computation
+    def nThreads: Int = 1; // Number of threads to use for computation
+    ctx.graphCompute(graph, nThreads);
+
+    // 5. Retrieve results (output tensors)
+    def resultData: ref[array[Float]](result.dataF32);
+
+    Console.print("Matrix multiplication result (transposed):\n[\n");
+
+    // Note: Since we don't have direct access to tensor ne field yet,
+    // we know the result dimensions are rowsB x rowsA (transposed)
+    def resultRows: Int = rowsB;
+    def resultCols: Int = rowsA;
+
+    def i: Int;
+    def j: Int;
+    for j = 0, j < resultRows, ++j {
+        Console.print("  ");
+        for i = 0, i < resultCols, ++i {
+            Console.print("%.2f ", resultData(j * resultCols + i)~cast[Float[64]]);
+        }
+        Console.print("\n");
+    }
+    Console.print("]\n");
+
+    // 6. Free memory and exit
+    free(ctx);
+}
+
+main();
