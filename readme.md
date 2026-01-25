@@ -36,14 +36,16 @@ export GGML_USE_VULKAN=1
 |----------------------|-------------------------------------------------------|
 | `init`               | `(params: InitParams): ref[Context]`                  |
 | `free`               | `(ctx: ref[Context])`                                 |
+| `numaInit`           | `(numaStrategy: NumaStrategy)`                        |
+| `isNuma`             | `(): Bool`                                            |
 | `getTensorOverhead`  | `(): ArchWord`                                        |
-| `getTypeSize`        | `(type: Int): ArchWord`                               |
-| `getRowSize`         | `(type: Int, ne: Int[64]): ArchWord`                  |
+| `getTypeSize`        | `(type: Type): ArchWord`                              |
+| `getRowSize`         | `(type: Type, ne: Int[64]): ArchWord`                 |
 | `getGraphOverhead`   | `(): ArchWord`                                        |
 | `setAbortCallback`   | `(cb: ptr[func(CharsPtr)]): ptr[func(CharsPtr)]`      |
 | `abort`              | `(file: CharsPtr, line: Int, fmt: CharsPtr, ...any)`  |
-| `fTypeToType`        | `(ftype: Int): Int`                                   |
-| `statusToString`     | `(status: Int): CharsPtr`                             |
+| `fTypeToType`        | `(ftype: FType): Type`                                |
+| `statusToString`     | `(status: Status): CharsPtr`                          |
 | `fp16ToFp32`         | `(v: Word[16]): Float`                                |
 | `fp16ToFp32`         | `(src: ref[array[Word[16]]],`                         |
 |                      | ` dst: ref[array[Float]],`                            |
@@ -137,6 +139,17 @@ export GGML_USE_VULKAN=1
 | `MOSTLY_BF16`            | 24    |
 | `MOSTLY_MXFP4`           | 25    |
 
+### NumaStrategy Enum
+
+| Constant     | Value |
+|--------------|-------|
+| `DISABLED`   | 0     |
+| `DISTRIBUTE` | 1     |
+| `ISOLATE`    | 2     |
+| `NUMACTL`    | 3     |
+| `MIRROR`     | 4     |
+| `COUNT`      | 5     |
+
 ### InitParams
 
 | Field       | Type     |
@@ -149,14 +162,14 @@ export GGML_USE_VULKAN=1
 
 | Method                | Signature                                         |
 |-----------------------|---------------------------------------------------|
-| `newTensor`           | `(type: Int, nDims: Int,                          |
+| `newTensor`           | `(type: Type, nDims: Int,                         |
 |                       |   ne: ref[array[Int[64]]]): ref[Tensor]`          |
-| `newTensor`           | `(type: Int, ne0: Int[64]): ref[Tensor]`          |
-| `newTensor`           | `(type: Int, ne0: Int[64],                        |
+| `newTensor`           | `(type: Type, ne0: Int[64]): ref[Tensor]`         |
+| `newTensor`           | `(type: Type, ne0: Int[64],                       |
 |                       |   ne1: Int[64]): ref[Tensor]`                     |
-| `newTensor`           | `(type: Int, ne0: Int[64],                        |
+| `newTensor`           | `(type: Type, ne0: Int[64],                       |
 |                       |   ne1: Int[64], ne2: Int[64]): ref[Tensor]`       |
-| `newTensor`           | `(type: Int, ne0-3: Int[64]): ref[Tensor]`        |
+| `newTensor`           | `(type: Type, ne0-3: Int[64]): ref[Tensor]`       |
 | `dup`                 | `(a: ref[Tensor]): ref[Tensor]`                   |
 | `dup`                 | `(a: ref[CGraph], forceGrads: Bool): ref[CGraph]` |
 | `newGraph`            | `(): ref[CGraph]`                                 |
@@ -209,7 +222,7 @@ export GGML_USE_VULKAN=1
 |                       | ` nDims: Int, mode: Int): ref[Tensor]`            |
 | `pad`                 | `(t: ref[Tensor], p0-3: Int): ref[Tensor]`        |
 | `roll`                | `(t: ref[Tensor], shift0-3: Int): ref[Tensor]`    |
-| `graphCompute`        | `(graph: ref[CGraph], nThreads: Int): Int`        |
+| `graphCompute`        | `(graph: ref[CGraph], nThreads: Int): Status`     |
 
 ### Tensor
 
@@ -233,6 +246,9 @@ export GGML_USE_VULKAN=1
 
 | Method                | Signature                                     |
 |-----------------------|-----------------------------------------------|
+| `load`                | `(path: CharsPtr): ref[Reg]` (static)         |
+| `cpuLoad`             | `()` (static)                                 |
+| `vkLoad`              | `()` (static)                                 |
 | `cpuInit`             | `(): ref[Backend]` (static)                   |
 | `vkInit`              | `(devNum: ArchWord): ref[Backend]` (static)   |
 | `free`                | `(ref[Backend])` (static)                     |
@@ -240,15 +256,15 @@ export GGML_USE_VULKAN=1
 | `isCpu`               | `Bool` (property)                             |
 | `isVk`                | `Bool` (property)                             |
 | `cpuSetNThreads`      | `(threads: Int)`                              |
-| `graphCompute`        | `(graph: ref[CGraph]): Int`                   |
-| `graphComputeAsync`   | `(graph: ref[CGraph]): Int`                   |
+| `graphCompute`        | `(graph: ref[CGraph]): Status`                |
+| `graphComputeAsync`   | `(graph: ref[CGraph]): Status`                |
 
 ### CGraph
 
 | Method    | Signature                                             |
 |-----------|-------------------------------------------------------|
 | `plan`    | `(nThreads: Int, threadPool: ref[ThreadPool]): CPlan` |
-| `compute` | `(cplan: ref[CPlan]): Int`                            |
+| `compute` | `(cplan: ref[CPlan]): Status`                         |
 | `reset`   | `()`                                                  |
 | `print`   | `()`                                                  |
 

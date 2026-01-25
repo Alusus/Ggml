@@ -1,12 +1,16 @@
 import "Srl/Array.alusus";
 import "Srl/String.alusus";
+import "Apm";
+Apm.importFile("Alusus/Sle", { "Srl/enums.alusus" });
 
 import "Bin/libggml-base.so.0.9.5";
+import "Bin/libggml.so.0.9.5";
 import "Bin/libggml-cpu-x64.so";
-def useVulkan: CharsPtr = Srl.System.getEnv("GGML_USE_VULKAN");
-if useVulkan != 0 and Srl.String.isEqual(useVulkan, "1") {
-    Core.importFile("Bin/libggml-vulkan.so");
-}
+CharsPtr(Srl.System.getEnv("GGML_USE_VULKAN")).{
+    if this != 0 and Srl.String.isEqual(this, "1") {
+        Core.importFile("Bin/libggml-vulkan.so");
+    }
+};
 
 import "Ggml/ThreadPool";
 import "Ggml/Tensor";
@@ -18,70 +22,83 @@ import "Ggml/BackendBuffer";
 import "Ggml/Gallocr";
 
 @merge module Ggml {
-    def Status: {
-        def ALLOC_FAILED: -2i32;
-        def FAILED: -1i32;
-        def SUCCESS: 0i32;
-        def ABORTED: 1i32;
+    class Status {
+        Srl.setupIntEnum[];
+        Srl.enumIntValue[ALLOC_FAILED, -2i32];
+        Srl.enumIntValue[FAILED, -1i32];
+        Srl.enumIntValue[SUCCESS, 0i32];
+        Srl.enumIntValue[ABORTED, 1i32];
     }
 
-    def Type: {
-        def F32: 0i32;
-        def F16: 1i32;
-        def Q4_0: 2i32;
-        def Q4_1: 3i32;
-        def Q5_0: 6i32;
-        def Q5_1: 7i32;
-        def Q8_0: 8i32;
-        def Q8_1: 9i32;
-        def Q2_K: 10i32;
-        def Q3_K: 11i32;
-        def Q4_K: 12i32;
-        def Q5_K: 13i32;
-        def Q6_K: 14i32;
-        def IQ2_XXS: 16i32;
-        def IQ2_XS: 17i32;
-        def IQ3_XXS: 18i32;
-        def IQ1_S: 19i32;
-        def IQ4_NL: 20i32;
-        def IQ3_S: 21i32;
-        def IQ2_S: 22i32;
-        def IQ4_XS: 23i32;
-        def I8: 24i32;
-        def I16: 25i32;
-        def I32: 26i32;
-        def I64: 27i32;
-        def F64: 28i32;
-        def IQ1_M: 29i32;
-        def BF16: 30i32;
+    class Type {
+        Srl.setupIntEnum[];
+        Srl.enumIntValue[F32, 0i32];
+        Srl.enumIntValue[F16, 1i32];
+        Srl.enumIntValue[Q4_0, 2i32];
+        Srl.enumIntValue[Q4_1, 3i32];
+        Srl.enumIntValue[Q5_0, 6i32];
+        Srl.enumIntValue[Q5_1, 7i32];
+        Srl.enumIntValue[Q8_0, 8i32];
+        Srl.enumIntValue[Q8_1, 9i32];
+        Srl.enumIntValue[Q2_K, 10i32];
+        Srl.enumIntValue[Q3_K, 11i32];
+        Srl.enumIntValue[Q4_K, 12i32];
+        Srl.enumIntValue[Q5_K, 13i32];
+        Srl.enumIntValue[Q6_K, 14i32];
+        Srl.enumIntValue[IQ2_XXS, 16i32];
+        Srl.enumIntValue[IQ2_XS, 17i32];
+        Srl.enumIntValue[IQ3_XXS, 18i32];
+        Srl.enumIntValue[IQ1_S, 19i32];
+        Srl.enumIntValue[IQ4_NL, 20i32];
+        Srl.enumIntValue[IQ3_S, 21i32];
+        Srl.enumIntValue[IQ2_S, 22i32];
+        Srl.enumIntValue[IQ4_XS, 23i32];
+        Srl.enumIntValue[I8, 24i32];
+        Srl.enumIntValue[I16, 25i32];
+        Srl.enumIntValue[I32, 26i32];
+        Srl.enumIntValue[I64, 27i32];
+        Srl.enumIntValue[F64, 28i32];
+        Srl.enumIntValue[IQ1_M, 29i32];
+        Srl.enumIntValue[BF16, 30i32];
     }
 
-    def FType: {
-        def UNKNOWN: -1i32;
-        def ALL_F32: 0i32;
-        def MOSTLY_F16: 1i32;
-        def MOSTLY_Q4_0: 2i32;
-        def MOSTLY_Q4_1: 3i32;
-        def MOSTLY_Q4_1_SOME_F16: 4i32;
-        def MOSTLY_Q8_0: 7i32;
-        def MOSTLY_Q5_0: 8i32;
-        def MOSTLY_Q5_1: 9i32;
-        def MOSTLY_Q2_K: 10i32;
-        def MOSTLY_Q3_K: 11i32;
-        def MOSTLY_Q4_K: 12i32;
-        def MOSTLY_Q5_K: 13i32;
-        def MOSTLY_Q6_K: 14i32;
-        def MOSTLY_IQ2_XXS: 15i32;
-        def MOSTLY_IQ2_XS: 16i32;
-        def MOSTLY_IQ3_XXS: 17i32;
-        def MOSTLY_IQ1_S: 18i32;
-        def MOSTLY_IQ4_NL: 19i32;
-        def MOSTLY_IQ3_S: 20i32;
-        def MOSTLY_IQ2_S: 21i32;
-        def MOSTLY_IQ4_XS: 22i32;
-        def MOSTLY_IQ1_M: 23i32;
-        def MOSTLY_BF16: 24i32;
-        def MOSTLY_MXFP4: 25i32;
+    class FType {
+        Srl.setupIntEnum[];
+        Srl.enumIntValue[UNKNOWN, -1i32];
+        Srl.enumIntValue[ALL_F32, 0i32];
+        Srl.enumIntValue[MOSTLY_F16, 1i32];
+        Srl.enumIntValue[MOSTLY_Q4_0, 2i32];
+        Srl.enumIntValue[MOSTLY_Q4_1, 3i32];
+        Srl.enumIntValue[MOSTLY_Q4_1_SOME_F16, 4i32];
+        Srl.enumIntValue[MOSTLY_Q8_0, 7i32];
+        Srl.enumIntValue[MOSTLY_Q5_0, 8i32];
+        Srl.enumIntValue[MOSTLY_Q5_1, 9i32];
+        Srl.enumIntValue[MOSTLY_Q2_K, 10i32];
+        Srl.enumIntValue[MOSTLY_Q3_K, 11i32];
+        Srl.enumIntValue[MOSTLY_Q4_K, 12i32];
+        Srl.enumIntValue[MOSTLY_Q5_K, 13i32];
+        Srl.enumIntValue[MOSTLY_Q6_K, 14i32];
+        Srl.enumIntValue[MOSTLY_IQ2_XXS, 15i32];
+        Srl.enumIntValue[MOSTLY_IQ2_XS, 16i32];
+        Srl.enumIntValue[MOSTLY_IQ3_XXS, 17i32];
+        Srl.enumIntValue[MOSTLY_IQ1_S, 18i32];
+        Srl.enumIntValue[MOSTLY_IQ4_NL, 19i32];
+        Srl.enumIntValue[MOSTLY_IQ3_S, 20i32];
+        Srl.enumIntValue[MOSTLY_IQ2_S, 21i32];
+        Srl.enumIntValue[MOSTLY_IQ4_XS, 22i32];
+        Srl.enumIntValue[MOSTLY_IQ1_M, 23i32];
+        Srl.enumIntValue[MOSTLY_BF16, 24i32];
+        Srl.enumIntValue[MOSTLY_MXFP4, 25i32];
+    }
+
+    class NumaStrategy {
+        Srl.setupIntEnum[];
+        Srl.enumIntValue[DISABLED, 0];
+        Srl.enumIntValue[DISTRIBUTE, 1];
+        Srl.enumIntValue[ISOLATE, 2];
+        Srl.enumIntValue[NUMACTL, 3];
+        Srl.enumIntValue[MIRROR, 4];
+        Srl.enumIntValue[COUNT, 5];
     }
 
     class InitParams {
@@ -96,14 +113,29 @@ import "Ggml/Gallocr";
     @expname[ggml_free]
     func free(ctx: ref[Context]);
 
+    @expname[ggml_numa_init]
+    func _numaInit(numaStrategy: Int);
+    func numaInit(numaStrategy: NumaStrategy) {
+        _numaInit(numaStrategy.val);
+    }
+
+    @expname[ggml_is_numa]
+    func isNuma(): Bool;
+
     @expname[ggml_tensor_overhead]
     func getTensorOverhead(): ArchWord;
 
     @expname[ggml_type_size]
-    func getTypeSize(type: Int): ArchWord;
+    func _getTypeSize(type: Int): ArchWord;
+    func getTypeSize(type: Type): ArchWord {
+        return _getTypeSize(type.val);
+    }
 
     @expname[ggml_row_size]
-    func getRowSize(type: Int, ne: Int[64]): ArchWord;
+    func _getRowSize(type: Int, ne: Int[64]): ArchWord;
+    func getRowSize(type: Type, ne: Int[64]): ArchWord {
+        return _getRowSize(type.val, ne);
+    }
 
     @expname[ggml_graph_overhead]
     func getGraphOverhead(): ArchWord;
@@ -115,10 +147,16 @@ import "Ggml/Gallocr";
     func abort(file: CharsPtr, line: Int, fmt: CharsPtr, ...any);
 
     @expname[ggml_ftype_to_ggml_type]
-    func fTypeToType(ftype: Int): Int;
+    func _fTypeToType(ftype: Int): Int;
+    func fTypeToType(ftype: FType): Type {
+        return Type().{ val = _fTypeToType(ftype.val) };
+    }
 
     @expname[ggml_status_to_string]
-    func statusToString(status: Int): CharsPtr;
+    func _statusToString(status: Int): CharsPtr;
+    func statusToString(status: Status): CharsPtr {
+        return _statusToString(status.val);
+    }
 
     @expname[ggml_fp16_to_fp32]
     func fp16ToFp32(v: Word[16]): Float;

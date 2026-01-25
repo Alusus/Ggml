@@ -1,5 +1,19 @@
 @merge module Ggml {
     class Backend {
+        class Reg {
+        }
+
+        @expname[ggml_backend_load]
+        func load(path: CharsPtr): ref[Reg];
+
+        func cpuLoad() {
+            Backend.load(String(getThisSourceDirectory[]) + "../Bin/libggml-cpu-x64.so");
+        }
+
+        func vkLoad() {
+            Backend.load(String(getThisSourceDirectory[]) + "../Bin/libggml-vulkan.so");
+        }
+
         @expname[ggml_backend_cpu_init]
         func cpuInit(): ref[Backend];
 
@@ -22,9 +36,15 @@
         handler this.cpuSetNThreads(threads: Int);
         
         @expname[ggml_backend_graph_compute]
-        handler this.graphCompute(graph: ref[CGraph]): Int;
+        handler this._graphCompute(graph: ref[CGraph]): Int;
+        handler this.graphCompute(graph: ref[CGraph]): Status {
+            return Status()~use_in(self) { val = this._graphCompute(graph) };
+        }
         
         @expname[ggml_backend_graph_compute_async]
-        handler this.graphComputeAsync(graph: ref[CGraph]): Int;
+        handler this._graphComputeAsync(graph: ref[CGraph]): Int;
+        handler this.graphComputeAsync(graph: ref[CGraph]): Status {
+            return Status()~use_in(self) { val = this._graphComputeAsync(graph) };
+        }
     }
 }

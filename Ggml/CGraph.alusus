@@ -4,7 +4,10 @@
         handler this.plan(nThreads: Int, threadPool: ref[ThreadPool]): CPlan;
 
         @expname[ggml_graph_compute]
-        handler this.compute(cplan: ref[CPlan]): Int;
+        handler this._compute(cplan: ref[CPlan]): Int;
+        handler this.compute(cplan: ref[CPlan]): Status {
+            return Status()~use_in(self) { val = this._compute(cplan) };
+        }
 
         @expname[ggml_graph_reset]
         handler this.reset();

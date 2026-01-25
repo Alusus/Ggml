@@ -1,19 +1,34 @@
 @merge module Ggml {
     class Context {
         @expname[ggml_new_tensor]
-        handler this.newTensor(type: Int, nDims: Int, ne: ref[array[Int[64]]]): ref[Tensor];
+        handler this._newTensor(type: Int, nDims: Int, ne: ref[array[Int[64]]]): ref[Tensor];
+        handler this.newTensor(type: Type, nDims: Int, ne: ref[array[Int[64]]]): ref[Tensor] {
+            return this.newTensor(type.val, nDims, ne);
+        }
 
         @expname[ggml_new_tensor_1d]
-        handler this.newTensor(type: Int, ne0: Int[64]): ref[Tensor];
+        handler this._newTensor(type: Int, ne0: Int[64]): ref[Tensor];
+        handler this.newTensor(type: Type, ne0: Int[64]): ref[Tensor] {
+            return this._newTensor(type.val, ne0);
+        }
 
         @expname[ggml_new_tensor_2d]
-        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64]): ref[Tensor];
+        handler this._newTensor(type: Int, ne0: Int[64], ne1: Int[64]): ref[Tensor];
+        handler this.newTensor(type: Type, ne0: Int[64], ne1: Int[64]): ref[Tensor] {
+            return this._newTensor(type.val, ne0, ne1);
+        }
 
         @expname[ggml_new_tensor_3d]
-        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64]): ref[Tensor];
+        handler this._newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64]): ref[Tensor];
+        handler this.newTensor(type: Type, ne0: Int[64], ne1: Int[64], ne2: Int[64]): ref[Tensor] {
+            return this._newTensor(type.val, ne0, ne1, ne2);
+        }
 
         @expname[ggml_new_tensor_4d]
-        handler this.newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64]): ref[Tensor];
+        handler this._newTensor(type: Int, ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64]): ref[Tensor];
+        handler this.newTensor(type: Type, ne0: Int[64], ne1: Int[64], ne2: Int[64], ne3: Int[64]): ref[Tensor] {
+            return this._newTensor(type.val, ne0, ne1, ne2, ne3);
+        }
 
         @expname[ggml_dup_tensor]
         handler this.dup(a: ref[Tensor]): ref[Tensor];
@@ -147,6 +162,9 @@
         handler this.roll(t: ref[Tensor], shift0: Int, shift1: Int, shift2: Int, shift3: Int): ref[Tensor];
 
         @expname[ggml_graph_compute_with_ctx]
-        handler this.graphCompute(graph: ref[CGraph], nThreads: Int): Int;
+        handler this._graphCompute(graph: ref[CGraph], nThreads: Int): Int;
+        handler this.graphCompute(graph: ref[CGraph], nThreads: Int): Status {
+            return Status()~use_in(self) { val = this._graphCompute(graph, nThreads) };
+        }
     }
 }
