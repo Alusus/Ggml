@@ -1,5 +1,5 @@
 # Ggml for Alusus
-[[العربية]](readme.ar.md)
+[[العربية]](README.ar.md)
 
 Alusus language bindings for the [GGML](https://github.com/ggml-org/ggml) tensor library.
 

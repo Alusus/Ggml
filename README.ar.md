@@ -1,7 +1,7 @@
 <div dir=rtl>
 
 # جـجمل - روابط مكتبة GGML للغة الأسس
-[[English]](readme.md)
+[[English]](README.md)
 
 روابط لغة الأسس لمكتبة [GGML](https://github.com/ggml-org/ggml) للموترات.
 
