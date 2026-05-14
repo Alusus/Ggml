@@ -8,7 +8,7 @@ Alusus language bindings for the [GGML](https://github.com/ggml-org/ggml) tensor
 
 ```
 import "Apm";
-Apm.importFile("Alusus/Ggml");
+Apm.importPackage("Alusus/Ggml@0.2");
 use Ggml;
 ```
 

@@ -1,7 +1,7 @@
 import "Srl/Array";
 import "Srl/Memory";
 import "Apm";
-Apm.importFile("Alusus/Ggml");
+Apm.importPackage("Alusus/Ggml@0.2");
 use Srl;
 use Ggml;
 

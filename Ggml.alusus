@@ -1,7 +1,7 @@
 import "Srl/Array.alusus";
 import "Srl/String.alusus";
 import "Apm";
-Apm.importFile("Alusus/Sle", { "Srl/enums.alusus" });
+Apm.importPackage("Alusus/Sle@0.2", { "Srl/enums.alusus" });
 
 import "Bin/libggml-base.so.0.9.5";
 import "Bin/libggml.so.0.9.5";

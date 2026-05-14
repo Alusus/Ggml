@@ -10,7 +10,7 @@
 
 ```
 اشمل "مـحا"؛
-مـحا.اشمل_ملف("Alusus/Ggml"، "جـجمل.أسس")؛
+مـحا.اشمل_حزمة("Alusus/Ggml@0.2"، "جـجمل.أسس")؛
 استخدم جـجمل؛
 ```
 
@@ -18,7 +18,7 @@
 
 ```
 import "Apm";
-Apm.importFile("Alusus/Ggml");
+Apm.importPackage("Alusus/Ggml@0.2");
 use Ggml;
 ```
 
