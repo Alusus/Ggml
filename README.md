@@ -337,6 +337,3 @@ export GGML_USE_VULKAN=1
 For detailed documentation of the underlying functions, refer to the [GGML documentation](https://github.com/ggml-org/ggml).
 
 
-## License
-
-This binding follows the GGML license (MIT). See the `license` file for details.

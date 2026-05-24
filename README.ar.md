@@ -647,9 +647,6 @@ export GGML_USE_VULKAN=1
 للتوثيق التفصيلي للدوال الأصلية، راجع [توثيق GGML](https://github.com/ggml-org/ggml).
 
 
-## الرخصة
-
-هذه الروابط تتبع رخصة GGML (MIT). راجع ملف `license` للتفاصيل.
 
 </div>
 
