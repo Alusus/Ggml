@@ -228,10 +228,29 @@ func buildBackwardExpand (context: ref[Context], graph: ref[CGraph], tensor: ref
 * `COUNT` (5)
 
 ### InitParams
+class InitParams {
+    def memSize: ArchWord;
+    def memBuffer: ptr;
+    def noAlloc: Bool;
+}
 
-* `memSize`: ArchWord
-* `memBuffer`: ptr
-* `noAlloc`: Bool
+#### memSize
+
+```
+def memSize: ArchWord;
+```
+
+#### memBuffer
+
+```
+def memBuffer: ptr;
+```
+
+#### noAlloc
+
+```
+def noAlloc: Bool;
+```
 
 ### Context
 
@@ -460,13 +479,40 @@ func graphCompute (graph: ref[CGraph], nThreads: Int): Status
 
 ### Tensor
 
-* `name`: CharsPtr (get/set)
-* `data`: ptr (get)
-* `dataF32`: ref[array[Float]] (get)
-* `nElements`: Int[64] (get)
-* `nRows`: Int[64] (get)
-* `nBytes`: ArchWord (get)
-* `nBytesPad`: ArchWord (get)
+#### name
+```
+handler this.name: CharsPtr;
+```
+
+#### data
+```
+handler this.data: ptr;
+```
+
+#### dataF32
+```
+handler this.dataF32: ref[array[Float]];
+```
+
+#### nElements
+```
+handler this.nElements: Int[64];
+```
+
+#### nRows
+```
+handler this.nRows: Int[64];
+```
+
+#### nBytes
+```
+handler this.nBytes: ArchWord;
+```
+
+#### nBytesPad
+```
+handler this.nBytesPad: ArchWord;
+```
 
 #### setInput
 
@@ -506,8 +552,18 @@ func backendGet (data: ptr, offset: ArchWord, size: ArchWord)
 
 ### Backend
 
-* `isCpu`: Bool (property)
-* `isVk`: Bool (property)
+#### isCpu
+
+```
+handler this.isCpu: Bool;
+```
+
+#### isVk
+
+```
+handler this.isVk: Bool;
+```
+
 
 #### load
 
@@ -597,12 +653,35 @@ func print ()
 
 ### CPlan
 
-* `workSize`: ArchWord
-* `workData`: ref[array[Word[8]]]
-* `nThreads`: Int
-* `threadPool`: ref[ThreadPool]
-* `abortCallback`: ptr[function(ptr)]
-* `abortCallbackData`: ptr
+#### workSize
+```
+def workSize: ArchWord;
+```
+
+#### workData
+```
+def workData: ref[array[Word[8]]];
+```
+
+#### nThreads
+```
+def nThreads: Int;
+```
+
+#### threadPool
+```
+def threadPool: ref[ThreadPool];
+```
+
+#### abortCallback
+```
+def abortCallback: ptr[function(ptr)];
+```
+
+#### abortCallbackData
+```
+def abortCallbackData: ptr;
+```
 
 ### BackendBuffer
 
@@ -670,12 +749,36 @@ func resume ()
 
 ### ThreadPool.Params
 
-* `cpuMask`: array[Bool, 512]
-* `nThreads`: Int
-* `prio`: Int
-* `poll`: Word
-* `strictCpu`: Bool
-* `paused`: Bool
+#### cpuMask
+```
+def cpuMask: array[Bool, 512];
+```
+
+#### nThreads
+```
+def nThreads: Int;
+```
+
+#### prio
+```
+def prio: Int;
+```
+
+#### poll
+```
+def poll: Word;
+```
+
+#### strictCpu
+```
+def strictCpu: Bool;
+```
+
+#### paused
+```
+def paused: Bool;
+```
+
 
 #### init
 
