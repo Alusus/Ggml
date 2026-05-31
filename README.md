@@ -2,12 +2,9 @@
 
 [[العربية]](README.ar.md)
 
-
 Alusus language bindings for the [GGML](https://github.com/ggml-org/ggml) tensor library.
 
 ## Usage
-
-
 
 ```
 import "Apm";
@@ -17,16 +14,12 @@ use Ggml;
 
 ## Examples
 
-
-
 See the `Examples/` directory:
 
 * `example.alusus` - Basic matrix multiplication using context
 * `backend_example.alusus` - Matrix multiplication using backend (Vulkan/CPU)
 
 ## Vulkan Support
-
-
 
 To enable Vulkan backend, set the environment variable before running:
 
@@ -35,8 +28,6 @@ export GGML_USE_VULKAN=1
 ```
 
 ## API Reference
-
-
 
 ### Global Functions
 
@@ -564,7 +555,6 @@ handler this.isCpu: Bool;
 handler this.isVk: Bool;
 ```
 
-
 #### load
 
 ```
@@ -779,7 +769,6 @@ def strictCpu: Bool;
 def paused: Bool;
 ```
 
-
 #### init
 
 ```
@@ -800,12 +789,8 @@ func match (a: ref[Params], b: ref[Params]): Bool
 
 ## Documentation
 
-
-
 For detailed documentation of the underlying functions, refer to the [GGML documentation](https://github.com/ggml-org/ggml).
 
 ## License
-
-
 
 This binding follows the GGML license (MIT). See the `license` file for details.
