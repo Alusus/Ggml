@@ -1,11 +1,11 @@
-# جـجمل - روابط مكتبة GGML للغة الأسس
+# جـجمل (GGML)
 [[English]](README.md)
+
+<div dir=rtl>
 
 روابط لغة الأسس لمكتبة [GGML](https://github.com/ggml-org/ggml) للموترات.
 
 ## الاستخدام
-
-<div dir=rtl>
 
 ```
 اشمل "مـحا"؛
@@ -13,13 +13,15 @@
 استخدم جـجمل؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 import "Apm";
 Apm.importPackage("Alusus/Ggml@0.2");
 use Ggml;
 ```
+
+</div>
 
 ## الأمثلة
 
@@ -31,9 +33,13 @@ use Ggml;
 
 لتفعيل مشغل فلكان، حدد متغير البيئة قبل التشغيل:
 
+<div dir=ltr>
+
 ```bash
 export GGML_USE_VULKAN=1
 ```
+
+</div>
 
 ## مرجع الواجهة البرمجية
 
@@ -41,263 +47,263 @@ export GGML_USE_VULKAN=1
 
 #### هيئ (init)
 
-<div dir=rtl>
-
 ```
 دالة هيئ(معطيات: مـعطيات_تهيئة): سند[سـياق]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function init(params: InitParams): ref[Context];
 ```
 
-#### حرر (free)
+</div>
 
-<div dir=rtl>
+#### حرر (free)
 
 ```
 دالة حرر(سياق: سند[سـياق])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function free(ctx: ref[Context]);
 ```
 
-#### هيئ_نوما (numaInit)
+</div>
 
-<div dir=rtl>
+#### هيئ_نوما (numaInit)
 
 ```
 دالة هيئ_نوما(إستراتيجية_نوما: إسـتراتيجية_نوما)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function numaInit(numaStrategy: NumaStrategy);
 ```
 
-#### أهو_نوما (isNuma)
+</div>
 
-<div dir=rtl>
+#### أهو_نوما (isNuma)
 
 ```
 دالة أهو_نوما(): ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function isNuma(): Bool;
 ```
 
-#### هات_تكلفة_الموتر (getTensorOverhead)
+</div>
 
-<div dir=rtl>
+#### هات_تكلفة_الموتر (getTensorOverhead)
 
 ```
 دالة هات_تكلفة_الموتر(): طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function getTensorOverhead(): ArchWord;
 ```
 
-#### هات_حجم_النوع (getTypeSize)
+</div>
 
-<div dir=rtl>
+#### هات_حجم_النوع (getTypeSize)
 
 ```
 دالة هات_حجم_النوع(نوع: نـوع): طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function getTypeSize(type: Type): ArchWord;
 ```
 
-#### هات_حجم_الصف (getRowSize)
+</div>
 
-<div dir=rtl>
+#### هات_حجم_الصف (getRowSize)
 
 ```
 دالة هات_حجم_الصف(نوع: نـوع، ب_ع: صحيح[64]): طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function getRowSize(type: Type, ne: Int[64]): ArchWord;
 ```
 
-#### هات_تكلفة_البيان (getGraphOverhead)
+</div>
 
-<div dir=rtl>
+#### هات_تكلفة_البيان (getGraphOverhead)
 
 ```
 دالة هات_تكلفة_البيان(): طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function getGraphOverhead(): ArchWord;
 ```
 
-#### حدد_دالة_الإجهاض (setAbortCallback)
+</div>
 
-<div dir=rtl>
+#### حدد_دالة_الإجهاض (setAbortCallback)
 
 ```
 دالة حدد_دالة_الإجهاض(د: مؤشر[دالة(مؤشر_محارف)]): مؤشر[دالة(مؤشر_محارف)]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function setAbortCallback(cb: ptr[func(CharsPtr)]): ptr[func(CharsPtr)];
 ```
 
-#### أجهض (abort)
+</div>
 
-<div dir=rtl>
+#### أجهض (abort)
 
 ```
 دالة أجهض(ملف: مؤشر_محارف، سطر: صحيح، صيغة: مؤشر_محارف، ...أيما)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function abort(file: CharsPtr, line: Int, fmt: CharsPtr, ...any);
 ```
 
-#### حول_نوع_بنية_إلى_نوع (fTypeToType)
+</div>
 
-<div dir=rtl>
+#### حول_نوع_بنية_إلى_نوع (fTypeToType)
 
 ```
 دالة حول_نوع_بنية_إلى_نوع(نوع_بنية: نـوع_بنية): نـوع؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function fTypeToType(ftype: FType): Type;
 ```
 
-#### حول_الحالة_لنص (statusToString)
+</div>
 
-<div dir=rtl>
+#### حول_الحالة_لنص (statusToString)
 
 ```
 دالة حول_الحالة_لنص(حالة: حـالة): مؤشر_محارف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function statusToString(status: Status): CharsPtr;
 ```
 
-#### حول_ع16_إلى_ع32 (fp16ToFp32)
+</div>
 
-<div dir=rtl>
+#### حول_ع16_إلى_ع32 (fp16ToFp32)
 
 ```
 دالة حول_ع16_إلى_ع32(ق: طـبيعي[16]): عائم؛
 دالة حول_ع16_إلى_ع32(من: سند[مصفوفة[طـبيعي[16]]]، إلى: سند[مصفوفة[عـائم]]، الطول: صـحيح[64])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function fp16ToFp32(v: Word[16]): Float;
 function fp16ToFp32(src: ref[array[Word[16]]], dst: ref[array[Float]], len: Int[64]);
 ```
 
-#### حول_ع32_إلى_ع16 (fp32ToFp16)
+</div>
 
-<div dir=rtl>
+#### حول_ع32_إلى_ع16 (fp32ToFp16)
 
 ```
 دالة حول_ع32_إلى_ع16(ق: عائم): طـبيعي[16]؛
 دالة حول_ع32_إلى_ع16(من: سند[مصفوفة[عـائم]]، إلى: سند[مصفوفة[طـبيعي[16]]]، الطول: صـحيح[64])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function fp32ToFp16(v: Float): Word[16];
 function fp32ToFp16(src: ref[array[Float]], dst: ref[array[Word[16]]], len: Int[64]);
 ```
 
-#### حول_ع32_إلى_عد16 (fp32ToBf16)
+</div>
 
-<div dir=rtl>
+#### حول_ع32_إلى_عد16 (fp32ToBf16)
 
 ```
 دالة حول_ع32_إلى_عد16(ق: عائم): طـبيعي[16]؛
 دالة حول_ع32_إلى_عد16(من: سند[مصفوفة[عـائم]]، إلى: سند[مصفوفة[طـبيعي[16]]]، الطول: صـحيح[64])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function fp32ToBf16(v: Float): Word[16];
 function fp32ToBf16(src: ref[array[Float]], dst: ref[array[Word[16]]], len: Int[64]);
 ```
 
-#### حول_عد16_إلى_ع32 (bf16ToFp32)
+</div>
 
-<div dir=rtl>
+#### حول_عد16_إلى_ع32 (bf16ToFp32)
 
 ```
 دالة حول_عد16_إلى_ع32(ق: طـبيعي[16]): عائم؛
 دالة حول_عد16_إلى_ع32(من: سند[مصفوفة[طـبيعي[16]]]، إلى: سند[مصفوفة[عـائم]]، الطول: صـحيح[64])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function bf16ToFp32(v: Word[16]): Float;
 function bf16ToFp32(src: ref[array[Word[16]]], dst: ref[array[Float]], len: Int[64]);
 ```
 
-#### ابن_توسيعا_أماميا (buildForwardExpand)
+</div>
 
-<div dir=rtl>
+#### ابن_توسيعا_أماميا (buildForwardExpand)
 
 ```
 دالة ابن_توسيعا_أماميا(بيان: سند[بـيان]، موتر: سند[مـوتر])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function buildForwardExpand(graph: ref[CGraph], tensor: ref[Tensor]);
 ```
 
-#### ابن_توسيعا_خلفيا (buildBackwardExpand)
+</div>
 
-<div dir=rtl>
+#### ابن_توسيعا_خلفيا (buildBackwardExpand)
 
 ```
 دالة ابن_توسيعا_خلفيا(سياق: سند[سـياق]، بيان: سند[بـيان]، موتر: سند[سند[مـوتر]])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 function buildBackwardExpand(context: ref[Context], graph: ref[CGraph], tensor: ref[ref[Tensor]]);
 ```
+
+</div>
 
 ### سرد حـالة (Status Enum)
 
@@ -359,51 +365,49 @@ function buildBackwardExpand(context: ref[Context], graph: ref[CGraph], tensor: 
 
 #### حجم_الذاكرة (memSize)
 
-<div dir=rtl>
-
 ```
 عرف حجم_الذاكرة: طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def memSize: ArchWord;
 ```
 
-#### صوان_الذاكرة (memBuffer)
+</div>
 
-<div dir=rtl>
+#### صوان_الذاكرة (memBuffer)
 
 ```
 عرف صوان_الذاكرة: مؤشر؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def memBuffer: ptr;
 ```
 
-#### بلا_حجز (noAlloc)
+</div>
 
-<div dir=rtl>
+#### بلا_حجز (noAlloc)
 
 ```
 عرف بلا_حجز: ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def noAlloc: Bool;
 ```
 
+</div>
+
 ### سـياق (Contex)
 
 #### أنشئ_موترا (newTensor)
-
-<div dir=rtl>
 
 ```
 عملية هذا.أنشئ_موترا(نوع: نـوع، ب_ع0: صحيح[64]): سند[مـوتر]؛
@@ -412,7 +416,7 @@ def noAlloc: Bool;
 عملية هذا.أنشئ_موترا(نوع: نـوع، ب_ع0-3: صحيح[64]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.newTensor(type: Type, ne0: Int[64]): ref[Tensor];
@@ -421,265 +425,265 @@ handler this.newTensor(type: Type, ne0-2: Int[64]): ref[Tensor];
 handler this.newTensor(type: Type, ne0-3: Int[64]): ref[Tensor];
 ```
 
-#### كرر (dup)
+</div>
 
-<div dir=rtl>
+#### كرر (dup)
 
 ```
 عملية هذا.كرر(أ: سند[مـوتر]): سند[مـوتر]؛
 عملية هذا.كرر(أ: سند[بـيان]، فرض_تدرجات: ثنائي): سند[بـيان]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.dup(a: ref[Tensor]): ref[Tensor];
 handler this.dup(a: ref[CGraph], forceGrads: Bool): ref[CGraph];
 ```
 
-#### أنشئ_بيانا (newGraph)
+</div>
 
-<div dir=rtl>
+#### أنشئ_بيانا (newGraph)
 
 ```
 عملية هذا.أنشئ_بيانا(): سند[بـيان]؛
 عملية هذا.أنشئ_بيانا(حجم: طـبيعي_متكيف، تدرجات: ثنائي): سند[بـيان]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.newGraph(): ref[CGraph];
 handler this.newGraph(size: ArchWord, grads: Bool): ref[CGraph];
 ```
 
-#### احجز_موترات_مشغل (backendAllocTensors)
+</div>
 
-<div dir=rtl>
+#### احجز_موترات_مشغل (backendAllocTensors)
 
 ```
 عملية هذا.احجز_موترات_مشغل(مشغل: سند[مـشغل]): سند[صـوان_مشغل]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.backendAllocTensors(backend: ref[Backend]): ref[BackendBuffer];
 ```
 
-#### اجمع (add)
+</div>
 
-<div dir=rtl>
+#### اجمع (add)
 
 ```
 عملية هذا.اجمع(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.add(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### اطرح (sub)
+</div>
 
-<div dir=rtl>
+#### اطرح (sub)
 
 ```
 عملية هذا.اطرح(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.sub(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### اضرب (mul)
+</div>
 
-<div dir=rtl>
+#### اضرب (mul)
 
 ```
 عملية هذا.اضرب(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.mul(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### قسم (div)
+</div>
 
-<div dir=rtl>
+#### قسم (div)
 
 ```
 عملية هذا.قسم(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.div(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### لوغاريتم (log)
+</div>
 
-<div dir=rtl>
+#### لوغاريتم (log)
 
 ```
 عملية هذا.لوغاريتم(م: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.log(t: ref[Tensor]): ref[Tensor];
 ```
 
-#### مجموع (sum)
+</div>
 
-<div dir=rtl>
+#### مجموع (sum)
 
 ```
 عملية هذا.مجموع(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.sum(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### متوسط (mean)
+</div>
 
-<div dir=rtl>
+#### متوسط (mean)
 
 ```
 عملية هذا.متوسط(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.mean(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### أقصى_معامل (argmax)
+</div>
 
-<div dir=rtl>
+#### أقصى_معامل (argmax)
 
 ```
 عملية هذا.أقصى_معامل(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.argmax(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### معيار (norm)
+</div>
 
-<div dir=rtl>
+#### معيار (norm)
 
 ```
 عملية هذا.معيار(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.norm(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### معيار_المتوسط (rmsNorm)
+</div>
 
-<div dir=rtl>
+#### معيار_المتوسط (rmsNorm)
 
 ```
 عملية هذا.معيار_المتوسط(أ: سند[مـوتر]، إبسلون: عائم): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.rmsNorm(a: ref[Tensor], eps: Float): ref[Tensor];
 ```
 
-#### اضرب_مصفوفات (mulMat)
+</div>
 
-<div dir=rtl>
+#### اضرب_مصفوفات (mulMat)
 
 ```
 عملية هذا.اضرب_مصفوفات(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.mulMat(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### حجم (scale)
+</div>
 
-<div dir=rtl>
+#### حجم (scale)
 
 ```
 عملية هذا.حجم(أ: سند[مـوتر]، ألفا: عائم): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.scale(a: ref[Tensor], alpha: Float): ref[Tensor];
 ```
 
-#### حدد (set)
+</div>
 
-<div dir=rtl>
+#### حدد (set)
 
 ```
 عملية هذا.حدد(أ: سند[مـوتر]، قيمة: عائم): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.set(a: ref[Tensor], value: Float): ref[Tensor];
 ```
 
-#### انسخ_إلى (cpy)
+</div>
 
-<div dir=rtl>
+#### انسخ_إلى (cpy)
 
 ```
 عملية هذا.انسخ_إلى(مصدر: سند[مـوتر]، وجهة: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.cpy(src: ref[Tensor], dst: ref[Tensor]): ref[Tensor];
 ```
 
-#### استمر (cont)
+</div>
 
-<div dir=rtl>
+#### استمر (cont)
 
 ```
 عملية هذا.استمر(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.cont(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### أعد_التشكيل (reshape)
+</div>
 
-<div dir=rtl>
+#### أعد_التشكيل (reshape)
 
 ```
 عملية هذا.أعد_التشكيل(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
@@ -687,7 +691,7 @@ handler this.cont(a: ref[Tensor]): ref[Tensor];
 عملية هذا.أعد_التشكيل(أ: سند[مـوتر]، ب_ع0-3: صحيح[64]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.reshape(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
@@ -695,845 +699,847 @@ handler this.reshape(a: ref[Tensor], ne0: Int[64]): ref[Tensor];
 handler this.reshape(a: ref[Tensor], ne0-3: Int[64]): ref[Tensor];
 ```
 
-#### اعرض (view)
+</div>
 
-<div dir=rtl>
+#### اعرض (view)
 
 ```
 عملية هذا.اعرض(أ: سند[مـوتر]، ب_ع0: صحيح[64]، إزاحة: طـبيعي_متكيف): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.view(a: ref[Tensor], ne0: Int[64], offset: ArchWord): ref[Tensor];
 ```
 
-#### بدل (permute)
+</div>
 
-<div dir=rtl>
+#### بدل (permute)
 
 ```
 عملية هذا.بدل(أ: سند[مـوتر]، محور1-4: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.permute(a: ref[Tensor], axis1-4: Int): ref[Tensor];
 ```
 
-#### منقولة (transpose)
+</div>
 
-<div dir=rtl>
+#### منقولة (transpose)
 
 ```
 عملية هذا.منقولة(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.transpose(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### هات_صفوفا (getRows)
+</div>
 
-<div dir=rtl>
+#### هات_صفوفا (getRows)
 
 ```
 عملية هذا.هات_صفوفا(أ: سند[مـوتر]، ب: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.getRows(a: ref[Tensor], b: ref[Tensor]): ref[Tensor];
 ```
 
-#### حدد_صفوفا (setRows)
+</div>
 
-<div dir=rtl>
+#### حدد_صفوفا (setRows)
 
 ```
 عملية هذا.حدد_صفوفا(أ: سند[مـوتر]، ب: سند[مـوتر]، ج: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.setRows(a: ref[Tensor], b: ref[Tensor], c: ref[Tensor]): ref[Tensor];
 ```
 
-#### قطري (diag)
+</div>
 
-<div dir=rtl>
+#### قطري (diag)
 
 ```
 عملية هذا.قطري(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.diag(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### قناع_قطري_لا_نهائي (diagMaskInf)
+</div>
 
-<div dir=rtl>
+#### قناع_قطري_لا_نهائي (diagMaskInf)
 
 ```
 عملية هذا.قناع_قطري_لا_نهائي(أ: سند[مـوتر]، ن_سابق: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.diagMaskInf(a: ref[Tensor], nPast: Int): ref[Tensor];
 ```
 
-#### قناع_قطري_لا_نهائي_موضعيا (diagMaskInfInplace)
+</div>
 
-<div dir=rtl>
+#### قناع_قطري_لا_نهائي_موضعيا (diagMaskInfInplace)
 
 ```
 عملية هذا.قناع_قطري_لا_نهائي_موضعيا(أ: سند[مـوتر]، ن_سابق: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.diagMaskInfInplace(a: ref[Tensor], nPast: Int): ref[Tensor];
 ```
 
-#### قناع_قطري_صفري (diagMaskZero)
+</div>
 
-<div dir=rtl>
+#### قناع_قطري_صفري (diagMaskZero)
 
 ```
 عملية هذا.قناع_قطري_صفري(أ: سند[مـوتر]، ن_سابق: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.diagMaskZero(a: ref[Tensor], nPast: Int): ref[Tensor];
 ```
 
-#### قناع_قطري_صفري_موضعيا (diagMaskZeroInplace)
+</div>
 
-<div dir=rtl>
+#### قناع_قطري_صفري_موضعيا (diagMaskZeroInplace)
 
 ```
 عملية هذا.قناع_قطري_صفري_موضعيا(أ: سند[مـوتر]، ن_سابق: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.diagMaskZeroInplace(a: ref[Tensor], nPast: Int): ref[Tensor];
 ```
 
-#### أسية_مطبعة (softMax)
+</div>
 
-<div dir=rtl>
+#### أسية_مطبعة (softMax)
 
 ```
 عملية هذا.أسية_مطبعة(أ: سند[مـوتر]): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.softMax(a: ref[Tensor]): ref[Tensor];
 ```
 
-#### تضمين_موضعي_دوار (rope)
+</div>
 
-<div dir=rtl>
+#### تضمين_موضعي_دوار (rope)
 
 ```
 عملية هذا.تضمين_موضعي_دوار(أ: سند[مـوتر]، ب: سند[مـوتر]، ن_أبعاد: صحيح، وضع: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.rope(a: ref[Tensor], b: ref[Tensor], nDims: Int, mode: Int): ref[Tensor];
 ```
 
-#### حشو (pad)
+</div>
 
-<div dir=rtl>
+#### حشو (pad)
 
 ```
 عملية هذا.حشو(م: سند[مـوتر]، ح0-3: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.pad(t: ref[Tensor], p0-3: Int): ref[Tensor];
 ```
 
-#### لف (roll)
+</div>
 
-<div dir=rtl>
+#### لف (roll)
 
 ```
 عملية هذا.لف(م: سند[مـوتر]، إزاحة0-3: صحيح): سند[مـوتر]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.roll(t: ref[Tensor], shift0-3: Int): ref[Tensor];
 ```
 
-#### شغل_البيان (graphCompute)
+</div>
 
-<div dir=rtl>
+#### شغل_البيان (graphCompute)
 
 ```
 عملية هذا.شغل_البيان(بيان: سند[بـيان]، عدد_المسالك: صحيح): حـالة؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.graphCompute(graph: ref[CGraph], nThreads: Int): Status;
 ```
 
+</div>
+
 ### مـوتر (Tensor)
 
 #### الاسم (name)
-
-<div dir=rtl>
 
 ```
 عملية هذا.الاسم: مؤشر_محارف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.name: CharsPtr;
 ```
 
-#### البيانات (data)
+</div>
 
-<div dir=rtl>
+#### البيانات (data)
 
 ```
 عملية هذا.البيانات: مؤشر؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.data: ptr;
 ```
 
-#### البيانات_ع32 (dataF32)
+</div>
 
-<div dir=rtl>
+#### البيانات_ع32 (dataF32)
 
 ```
 عملية هذا.البيانات_ع32: سند[مصفوفة[عائم]]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.dataF32: ref[array[Float]];
 ```
 
-#### عدد_العناصر (nElements)
+</div>
 
-<div dir=rtl>
+#### عدد_العناصر (nElements)
 
 ```
 عملية هذا.عدد_العناصر: صحيح[64]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.nElements: Int[64];
 ```
 
-#### عدد_الصفوف (nRows)
+</div>
 
-<div dir=rtl>
+#### عدد_الصفوف (nRows)
 
 ```
 عملية هذا.عدد_الصفوف: صحيح[64]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.nRows: Int[64];
 ```
 
-#### عدد_البايتات (nBytes)
+</div>
 
-<div dir=rtl>
+#### عدد_البايتات (nBytes)
 
 ```
 عملية هذا.عدد_البايتات: طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.nBytes: ArchWord;
 ```
 
-#### عدد_البايتات_بمحاذاة (nBytesPad)
+</div>
 
-<div dir=rtl>
+#### عدد_البايتات_بمحاذاة (nBytesPad)
 
 ```
 عملية هذا.عدد_البايتات_بمحاذاة: طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.nBytesPad: ArchWord;
 ```
 
-#### حدد_كمدخل (setInput)
+</div>
 
-<div dir=rtl>
+#### حدد_كمدخل (setInput)
 
 ```
 عملية هذا.حدد_كمدخل()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.setInput();
 ```
 
-#### حدد_كمخرج (setOutput)
+</div>
 
-<div dir=rtl>
+#### حدد_كمخرج (setOutput)
 
 ```
 عملية هذا.حدد_كمخرج()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.setOutput();
 ```
 
-#### حدد_كمعامل (setParam)
+</div>
 
-<div dir=rtl>
+#### حدد_كمعامل (setParam)
 
 ```
 عملية هذا.حدد_كمعامل()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.setParam();
 ```
 
-#### حدد_كخسارة (setLoss)
+</div>
 
-<div dir=rtl>
+#### حدد_كخسارة (setLoss)
 
 ```
 عملية هذا.حدد_كخسارة()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.setLoss();
 ```
 
-#### حدد_من_المشغل (backendSet)
+</div>
 
-<div dir=rtl>
+#### حدد_من_المشغل (backendSet)
 
 ```
 عملية هذا.حدد_من_المشغل(بيانات: مؤشر، إزاحة: طـبيعي_متكيف، حجم: طـبيعي_متكيف)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.backendSet(data: ptr, offset: ArchWord, size: ArchWord);
 ```
 
-#### هات_من_المشغل (backendGet)
+</div>
 
-<div dir=rtl>
+#### هات_من_المشغل (backendGet)
 
 ```
 عملية هذا.هات_من_المشغل(بيانات: مؤشر، إزاحة: طـبيعي_متكيف، حجم: طـبيعي_متكيف)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.backendGet(data: ptr, offset: ArchWord, size: ArchWord);
 ```
 
+</div>
+
 ### مـشغل (Backend)
 
 #### حمل (load)
-
-<div dir=rtl>
 
 ```
 عملية هذا_الصنف.حمل(مسار: مؤشر_محارف): سند[سـجل]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.load(path: CharsPtr): ref[Reg];
 ```
 
-#### حمل_للمعالج (cpuLoad)
+</div>
 
-<div dir=rtl>
+#### حمل_للمعالج (cpuLoad)
 
 ```
 عملية هذا_الصنف.حمل_للمعالج()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.cpuLoad();
 ```
 
-#### حمل_لفلكان (vkLoad)
+</div>
 
-<div dir=rtl>
+#### حمل_لفلكان (vkLoad)
 
 ```
 عملية هذا_الصنف.حمل_لفلكان()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.vkLoad();
 ```
 
-#### هيئ_للمعالج (cpuInit)
+</div>
 
-<div dir=rtl>
+#### هيئ_للمعالج (cpuInit)
 
 ```
 عملية هذا_الصنف.هيئ_للمعالج(): سند[مـشغل]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.cpuInit(): ref[Backend];
 ```
 
-#### هيئ_لفلكان (vkInit)
+</div>
 
-<div dir=rtl>
+#### هيئ_لفلكان (vkInit)
 
 ```
 عملية هذا_الصنف.هيئ_لفلكان(رقم_جهاز: طـبيعي_متكيف): سند[مـشغل]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.vkInit(devNum: ArchWord): ref[Backend];
 ```
 
-#### حرر (free)
+</div>
 
-<div dir=rtl>
+#### حرر (free)
 
 ```
 عملية هذا_الصنف.حرر(سند[مـشغل])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.free(ref[Backend]);
 ```
 
-#### هات_نوع_الصوان_المبدئي (getDefaultBufferType)
+</div>
 
-<div dir=rtl>
+#### هات_نوع_الصوان_المبدئي (getDefaultBufferType)
 
 ```
 عملية هذا.هات_نوع_الصوان_المبدئي(): سند[نـوع_صوان_مشغل]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.getDefaultBufferType(): ref[BackendBufferType];
 ```
 
-#### أللمعالج (isCpu)
+</div>
 
-<div dir=rtl>
+#### أللمعالج (isCpu)
 
 ```
 عملية هذا.أللمعالج: ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.isCpu: Bool;
 ```
 
-#### ألفلكان (isVk)
+</div>
 
-<div dir=rtl>
+#### ألفلكان (isVk)
 
 ```
 عملية هذا.ألفلكان: ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.isVk: Bool;
 ```
 
-#### حدد_عدد_المسالك_للمعالج (cpuSetNThreads)
+</div>
 
-<div dir=rtl>
+#### حدد_عدد_المسالك_للمعالج (cpuSetNThreads)
 
 ```
 عملية هذا.حدد_عدد_المسالك_للمعالج(مسالك: صحيح)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.cpuSetNThreads(threads: Int);
 ```
 
-#### شغل_البيان (graphCompute)
+</div>
 
-<div dir=rtl>
+#### شغل_البيان (graphCompute)
 
 ```
 عملية هذا.شغل_البيان(بيان: سند[بـيان]): حـالة؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.graphCompute(graph: ref[CGraph]): Status;
 ```
 
-#### شغل_البيان_بالتوازي (graphComputeAsync)
+</div>
 
-<div dir=rtl>
+#### شغل_البيان_بالتوازي (graphComputeAsync)
 
 ```
 عملية هذا.شغل_البيان_بالتوازي(بيان: سند[بـيان]): حـالة؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.graphComputeAsync(graph: ref[CGraph]): Status;
 ```
 
+</div>
+
 ### بـيان (CGraph)
 
 #### خطط (plan)
-
-<div dir=rtl>
 
 ```
 عملية هذا.خطط(عدد_المسالك: صحيح، مجمع_مسالك: سند[مـجمع_مسالك]): خـطة؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.plan(nThreads: Int, threadPool: ref[ThreadPool]): CPlan;
 ```
 
-#### شغل (compute)
+</div>
 
-<div dir=rtl>
+#### شغل (compute)
 
 ```
 عملية هذا.شغل(خطة: سند[خـطة]): حـالة؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.compute(cplan: ref[CPlan]): Status;
 ```
 
-#### أعد_الضبط (reset)
+</div>
 
-<div dir=rtl>
+#### أعد_الضبط (reset)
 
 ```
 عملية هذا.أعد_الضبط()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.reset();
 ```
 
-#### اطبع (print)
+</div>
 
-<div dir=rtl>
+#### اطبع (print)
 
 ```
 عملية هذا.اطبع()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.print();
 ```
 
+</div>
+
 ### خـطة (CPlan)
 
 #### حجم_العمل (workSize)
-
-<div dir=rtl>
 
 ```
 عرف حجم_العمل: طـبيعي_متكيف؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def workSize: ArchWord;
 ```
 
-#### بيانات_العمل (workData)
+</div>
 
-<div dir=rtl>
+#### بيانات_العمل (workData)
 
 ```
 عرف بيانات_العمل: سند[مصفوفة[طـبيعي[8]]]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def workData: ref[array[Word[8]]];
 ```
 
-#### عدد_المسالك (nThreads)
+</div>
 
-<div dir=rtl>
+#### عدد_المسالك (nThreads)
 
 ```
 عرف عدد_المسالك: صحيح؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def nThreads: Int;
 ```
 
-#### مجمع_المسالك (threadPool)
+</div>
 
-<div dir=rtl>
+#### مجمع_المسالك (threadPool)
 
 ```
 عرف مجمع_المسالك: سند[مـجمع_مسالك]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def threadPool: ref[ThreadPool];
 ```
 
-#### دالة_الإجهاض (abortCallback)
+</div>
 
-<div dir=rtl>
+#### دالة_الإجهاض (abortCallback)
 
 ```
 عرف دالة_الإجهاض: مؤشر[دالة(مؤشر)]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def abortCallback: ptr[function(ptr)];
 ```
 
-#### بيانات_دالة_الإجهاض (abortCallbackData)
+</div>
 
-<div dir=rtl>
+#### بيانات_دالة_الإجهاض (abortCallbackData)
 
 ```
 عرف بيانات_دالة_الإجهاض: مؤشر؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def abortCallbackData: ptr;
 ```
 
+</div>
+
 ### صـوان_مشغل (BackendBuffer)
 
 #### حرر (free)
-
-<div dir=rtl>
 
 ```
 عملية هذا_الصنف.حرر(سند[صـوان_مشغل])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.free(ref[BackendBuffer]);
 ```
 
+</div>
+
 ### حـاجز_بيان (Gallocr)
 
 #### أنشئ (new)
-
-<div dir=rtl>
 
 ```
 عملية هذا_الصنف.أنشئ(نوع_صوان_مشغل: سند[نـوع_صوان_مشغل]): سند[حـاجز_بيان]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.new(backendBufferType: ref[BackendBufferType]): ref[Gallocr];
 ```
 
-#### حرر (free)
+</div>
 
-<div dir=rtl>
+#### حرر (free)
 
 ```
 عملية هذا_الصنف.حرر(سند[حـاجز_بيان])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.free(ref[Gallocr]);
 ```
 
-#### احجز_بيانا (allocGraph)
+</div>
 
-<div dir=rtl>
+#### احجز_بيانا (allocGraph)
 
 ```
 عملية هذا.احجز_بيانا(بيان: سند[بـيان]): ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.allocGraph(graph: ref[CGraph]): Bool;
 ```
 
+</div>
+
 ### مـجمع_مسالك (ThreadPool)
 
 #### أنشئ (new)
-
-<div dir=rtl>
 
 ```
 عملية هذا_الصنف.أنشئ(معطيات: سند[مـعطيات]): سند[مـجمع_مسالك]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.new(params: ref[Params]): ref[ThreadPool];
 ```
 
-#### حرر (free)
+</div>
 
-<div dir=rtl>
+#### حرر (free)
 
 ```
 عملية هذا_الصنف.حرر(مجمع: سند[مـجمع_مسالك])؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.free(pool: ref[ThreadPool]);
 ```
 
-#### عدد_المسالك (nThreads)
+</div>
 
-<div dir=rtl>
+#### عدد_المسالك (nThreads)
 
 ```
 عملية هذا.عدد_المسالك: صحيح؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.nThreads: Int;
 ```
 
-#### أوقف (pause)
+</div>
 
-<div dir=rtl>
+#### أوقف (pause)
 
 ```
 عملية هذا.أوقف()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.pause();
 ```
 
-#### استأنف (resume)
+</div>
 
-<div dir=rtl>
+#### استأنف (resume)
 
 ```
 عملية هذا.استأنف()؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.resume();
 ```
+
+</div>
 
 ### سرد أولـوية_جدولة (ThreadPool.SchedPriority Enum)
 
@@ -1547,129 +1553,129 @@ handler this.resume();
 
 #### قناع_المعالجات (cpuMask)
 
-<div dir=rtl>
-
 ```
 عرف قناع_المعالجات: مصفوفة[ثنائي، 512]؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def cpuMask: array[Bool, 512];
 ```
 
-#### عدد_المسالك (nThreads)
+</div>
 
-<div dir=rtl>
+#### عدد_المسالك (nThreads)
 
 ```
 عرف عدد_المسالك: صحيح؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def nThreads: Int;
 ```
 
-#### الأولوية (prio)
+</div>
 
-<div dir=rtl>
+#### الأولوية (prio)
 
 ```
 عرف الأولوية: صحيح؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def prio: Int;
 ```
 
-#### الاستقصاء (poll)
+</div>
 
-<div dir=rtl>
+#### الاستقصاء (poll)
 
 ```
 عرف الاستقصاء: طـبيعي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def poll: Word;
 ```
 
-#### معالج_صارم (strictCpu)
+</div>
 
-<div dir=rtl>
+#### معالج_صارم (strictCpu)
 
 ```
 عرف معالج_صارم: ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def strictCpu: Bool;
 ```
 
-#### متوقف (paused)
+</div>
 
-<div dir=rtl>
+#### متوقف (paused)
 
 ```
 عرف متوقف: ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 def paused: Bool;
 ```
 
-#### هيئ (init)
+</div>
 
-<div dir=rtl>
+#### هيئ (init)
 
 ```
 عملية هذا.هيئ(عدد_المسالك: صحيح)؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this.init(nThreads: Int);
 ```
 
-#### هات_المبدئية (getDefault)
+</div>
 
-<div dir=rtl>
+#### هات_المبدئية (getDefault)
 
 ```
 عملية هذا_الصنف.هات_المبدئية(): مـعطيات؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.getDefault(): Params;
 ```
 
-#### طابق (match)
+</div>
 
-<div dir=rtl>
+#### طابق (match)
 
 ```
 عملية هذا_الصنف.طابق(أ: سند[مـعطيات]، ب: سند[مـعطيات]): ثنائي؛
 ```
 
-</div>
+<div dir=ltr>
 
 ```
 handler this_type.match(a: ref[Params], b: ref[Params]): Bool;
 ```
+
+</div>
 
 ## التوثيق
 
@@ -1678,3 +1684,6 @@ handler this_type.match(a: ref[Params], b: ref[Params]): Bool;
 ## الرخصة
 
 هذه الروابط تتبع رخصة GGML (MIT). راجع ملف `license` للتفاصيل.
+
+</div>
+
