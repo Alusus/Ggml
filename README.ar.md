@@ -1,4 +1,4 @@
-# جـجمل (GGML)
+# جـجمل (Ggml)
 [[English]](README.md)
 
 <div dir=rtl>
@@ -35,7 +35,7 @@ use Ggml;
 
 <div dir=ltr>
 
-```bash
+```
 export GGML_USE_VULKAN=1
 ```
 
