@@ -25,7 +25,6 @@ func main() {
     });
 
     // 1. Initialize backend
-    // For now, we use CPU backend (CUDA support can be added later)
     def backend: ref[Backend](Backend.vkInit(0));
 
     // Calculate the size needed to allocate

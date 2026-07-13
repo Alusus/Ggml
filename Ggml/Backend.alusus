@@ -4,14 +4,43 @@
         }
 
         @expname[ggml_backend_load]
-        func load(path: CharsPtr): ref[Reg];
+        func _load(path: CharsPtr): ref[Reg];
+
+        func load(path: CharsPtr): ref[Reg] {
+            def libPath: getThisSourceDirectory[];
+            def fullPath: String = String("./") + path;
+            if Fs.exists(fullPath) return _load(fullPath);
+            fullPath = String(libPath) + "../Bin/" + path;
+            if not Fs.exists(fullPath) {
+                System.fail(1, String("Lib not found: ") + path);
+            }
+            return _load(fullPath);
+        }
+
+        func load(path: CharsPtr, exePath: CharsPtr): ref[Reg] {
+            def fullPath: String = (String(exePath) + "/" + path).replace("//", "/");
+            if not Fs.exists(fullPath) {
+                System.fail(1, String("Lib not found: ") + path);
+            }
+            return _load(fullPath);
+        }
 
         func cpuLoad() {
-            Backend.load(String(getThisSourceDirectory[]) + "../Bin/libggml-cpu-x64.so");
+            load("libggml-cpu-x64.so");
+        }
+
+        func cpuLoad(exePath: CharsPtr) {
+            load("libggml-cpu-x64.so", exePath);
         }
 
         func vkLoad() {
-            Backend.load(String(getThisSourceDirectory[]) + "../Bin/libggml-vulkan.so");
+            load("libggml-cpu-x64.so"); // Even when we use Vulkan the CPU version must still be loaded
+            load("libggml-vulkan.so");
+        }
+
+        func vkLoad(exePath: CharsPtr) {
+            load("libggml-cpu-x64.so", exePath); // Even when we use Vulkan the CPU version must still be loaded
+            load("libggml-vulkan.so", exePath);
         }
 
         @expname[ggml_backend_cpu_init]

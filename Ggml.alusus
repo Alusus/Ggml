@@ -1,16 +1,16 @@
-import "Srl/Array.alusus";
-import "Srl/String.alusus";
+import "Srl/Array";
+import "Srl/String";
+import "Srl/Fs";
+import "ProcessExt";
 import "Apm";
-Apm.importPackage("Alusus/Sle@0.2", { "Srl/enums.alusus" });
+Apm.importPackage("Alusus/Sle@0.2", { "Srl/enums" });
 
-import "Bin/libggml-base.so.0.9.5";
-import "Bin/libggml.so.0.9.5";
+import "Bin/libggml-base.so.0";
+import "Bin/libggml.so.0";
 import "Bin/libggml-cpu-x64.so";
-CharsPtr(Srl.System.getEnv("GGML_USE_VULKAN")).{
-    if this != 0 and Srl.String.isEqual(this, "1") {
-        Core.importFile("Bin/libggml-vulkan.so");
-    }
-};
+if Process.getOption({ "ggml_enable_vulkan", "ججمل_مكن_فلكان" }) == "1" {
+    Core.importFile("Bin/libggml-vulkan.so");
+}
 
 import "Ggml/ThreadPool";
 import "Ggml/Tensor";
@@ -22,6 +22,19 @@ import "Ggml/BackendBuffer";
 import "Ggml/Gallocr";
 
 @merge module Ggml {
+    func getBuildDependencies(): Array[String] {
+        def sourceDir: getThisSourceDirectory[];
+        def deps: Array[String]({
+            String(sourceDir) + "Bin/libggml-base.so.0",
+            String(sourceDir) + "Bin/libggml.so.0",
+            String(sourceDir) + "Bin/libggml-cpu-x64.so"
+        });
+        if Process.getOption({ "ggml_enable_vulkan", "ججمل_مكن_فلكان" }) == "1" {
+            deps.add(String(sourceDir) + "Bin/libggml-vulkan.so");
+        }
+        return deps;
+    }
+
     class Status {
         Srl.setupIntEnum[];
         Srl.enumIntValue[ALLOC_FAILED, -2i32];

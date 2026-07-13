@@ -21,15 +21,25 @@ See the `Examples/` directory:
 
 ## Vulkan Support
 
-To enable Vulkan backend, set the environment variable before running:
+To enable Vulkan backend, pass the `ggml_enable_vulkan` option to Alusus compiler when running/compiling
+your app:
 
 ```
-export GGML_USE_VULKAN=1
+alusus --opt ggml_enable_vulkan my_app.alusus
 ```
 
 ## API Reference
 
 ### Global Functions
+
+#### getBuildDependencies
+
+```
+func getBuildDependencies(): Array[String];
+```
+
+A function that return an array of libraries and packages required to build a binary version of the
+application.
 
 #### init
 
@@ -564,14 +574,30 @@ func load (path: CharsPtr): ref[Reg]
 #### cpuLoad
 
 ```
-func cpuLoad ()
+func cpuLoad ();
+func cpuLoad (exePath: CharsPtr);
 ```
+
+Load the backend specific for running inference on the CPU. This should be called before
+initialization.
+The first form of this function looks for the backend library in the current path as well
+as in the Ggml library's path. This would cover both running in JIT mode as well as in
+pre-compilation mode, which is enough for most cases, but the second form is available for
+exceptional cases. The second form will look only within the provided path.
 
 #### vkLoad
 
 ```
-func vkLoad ()
+func vkLoad ();
+func vkLoad (exePath: CharsPtr);
 ```
+
+Load the backend specific fur running inference through Vulkan API. Use this instead of
+`cpuLoad` if you want to run inference on the GPU.
+The first form of this function looks for the backend library in the current path as well
+as in the Ggml library's path. This would cover both running in JIT mode as well as in
+pre-compilation mode, which is enough for most cases, but the second form is available for
+exceptional cases. The second form will look only within the provided path.
 
 #### cpuInit
 
